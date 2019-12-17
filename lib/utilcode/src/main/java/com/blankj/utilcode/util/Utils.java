@@ -60,8 +60,8 @@ import java.util.concurrent.ExecutorService;
 public final class Utils {
 
     private static final ActivityLifecycleImpl ACTIVITY_LIFECYCLE = new ActivityLifecycleImpl();
-    private static final ExecutorService       UTIL_POOL          = ThreadUtils.getCachedPool();
-    private static final Handler               UTIL_HANDLER       = new Handler(Looper.getMainLooper());
+    private static final ExecutorService UTIL_POOL = ThreadUtils.getCachedPool();
+    private static final Handler UTIL_HANDLER = new Handler(Looper.getMainLooper());
 
     @SuppressLint("StaticFieldLeak")
     private static Application sApplication;
@@ -150,8 +150,8 @@ public final class Utils {
         List<ActivityManager.RunningAppProcessInfo> info = am.getRunningAppProcesses();
         if (info == null || info.size() == 0) return false;
         for (ActivityManager.RunningAppProcessInfo aInfo : info) {
-            if (aInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
-                if (aInfo.processName.equals(Utils.getApp().getPackageName())) {
+            if (aInfo.processName.equals(Utils.getApp().getPackageName())) {
+                if (aInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
                     return true;
                 }
             }
@@ -315,7 +315,7 @@ public final class Utils {
     public static final class TransActivity extends FragmentActivity {
 
         private static final Map<TransActivity, TransActivityDelegate> CALLBACK_MAP = new HashMap<>();
-        private static       TransActivityDelegate                     sDelegate;
+        private static TransActivityDelegate sDelegate;
 
         public static void start(final Func1<Void, Intent> consumer,
                                  final TransActivityDelegate delegate) {
@@ -453,13 +453,13 @@ public final class Utils {
 
     static class ActivityLifecycleImpl implements ActivityLifecycleCallbacks {
 
-        final LinkedList<Activity>                             mActivityList         = new LinkedList<>();
-        final List<OnAppStatusChangedListener>                 mStatusListeners      = new ArrayList<>();
+        final LinkedList<Activity> mActivityList = new LinkedList<>();
+        final List<OnAppStatusChangedListener> mStatusListeners = new ArrayList<>();
         final Map<Activity, List<OnActivityDestroyedListener>> mDestroyedListenerMap = new HashMap<>();
 
-        private int     mForegroundCount = 0;
-        private int     mConfigCount     = 0;
-        private boolean mIsBackground    = false;
+        private int mForegroundCount = 0;
+        private int mConfigCount = 0;
+        private boolean mIsBackground = false;
 
         @Override
         public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
@@ -673,9 +673,9 @@ public final class Utils {
 
     public abstract static class Task<Result> implements Runnable {
 
-        private static final int NEW         = 0;
-        private static final int COMPLETING  = 1;
-        private static final int CANCELLED   = 2;
+        private static final int NEW = 0;
+        private static final int COMPLETING = 1;
+        private static final int CANCELLED = 2;
         private static final int EXCEPTIONAL = 3;
 
         private volatile int state = NEW;
